@@ -42,6 +42,40 @@ public class Server {
 		}
 	}
 	
+	public String[] select(String query) {
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			return imprimirResultado(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+    public String[] imprimirResultado(ResultSet resultado) throws SQLException{
+		ResultSetMetaData metadata = resultado.getMetaData();
+	    int columnCount = metadata.getColumnCount();    
+	    String result[] = new String[1000];
+	    String row = "";
+	    int count = 0;
+	    for (int i = 1; i <= columnCount; i++) {
+	        row = (metadata.getColumnName(i) + ", ");      
+	    }
+	    result[count] = row;
+	    count++;
+	    while (resultado.next()) {
+	        row = "";
+	        for (int i = 1; i <= columnCount; i++) {
+	            row += resultado.getString(i) + ", ";          
+	        }
+	        result[count] = row;
+
+	    }
+	    return result;
+    }
+	
 	public void addAlbumMidia(String name, String path) {
 		String query = "INSERT INTO Album (nome, capa) VALUES (?,?)";
 				PreparedStatement ps;
