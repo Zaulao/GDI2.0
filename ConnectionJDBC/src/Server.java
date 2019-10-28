@@ -54,6 +54,24 @@ public class Server {
 		return null;
 	}
 	
+	public void insert(String query) {
+		try {
+			stmt.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(String query) {
+		try {
+			stmt.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     public String[] imprimirResultado(ResultSet resultado) throws SQLException{
 		ResultSetMetaData metadata = resultado.getMetaData();
 	    int columnCount = metadata.getColumnCount();    
