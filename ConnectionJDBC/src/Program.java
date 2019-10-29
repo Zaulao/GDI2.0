@@ -7,8 +7,8 @@ public class Program {
 		Scanner in = new Scanner(System.in);
 		int cmd = 1;
 		while (cmd != 0) {
-			if(cmd < 0 || cmd > 4) System.out.println("Não consegui compreender, por favor tente novamente.");
-			System.out.println("Por favor defina a operação que deseja realizar:");
+			if(cmd < 0 || cmd > 4) System.out.println("Nao consegui compreender, por favor tente novamente.");
+			System.out.println("Por favor defina a operaï¿½ï¿½o que deseja realizar:");
 			System.out.println("0 - Para fechar o programa");
 			System.out.println("1 - Inserir");
 			System.out.println("2 - Remover");
@@ -21,8 +21,8 @@ public class Program {
 				break;
 			case 1:
 				System.out.println("Selecione em qual tabela voce deseja inserir um dado:");
-				System.out.println("0 - Usuário");
-				System.out.println("1 - Música");
+				System.out.println("0 - Usuï¿½rio");
+				System.out.println("1 - Mï¿½sica");
 				System.out.println("2 - Artista");
 				System.out.println("3 - Playlist");
 				cmd = Integer.parseInt(in.nextLine());
@@ -39,8 +39,8 @@ public class Program {
 				}
 			case 2:
 				System.out.println("Selecione de qual tabela voce deseja remover um dado:");
-				System.out.println("0 - Usuário");
-				System.out.println("1 - Música");
+				System.out.println("0 - Usuï¿½rio");
+				System.out.println("1 - Mï¿½sica");
 				System.out.println("2 - Artista");
 				System.out.println("3 - Playlist");
 				cmd = Integer.parseInt(in.nextLine());
@@ -55,11 +55,70 @@ public class Program {
 				}
 			case 3:
 				System.out.println("Selecione em qual tabela voce deseja fazer uma consulta");
-				System.out.println("0 - Usuário");
-				System.out.println("1 - Música");
+				System.out.println("0 - Usuï¿½rio");
+				System.out.println("1 - Mï¿½sica");
 				System.out.println("2 - Artista");
 				System.out.println("3 - Playlist");
 				cmd = Integer.parseInt(in.nextLine());
+				String[] attributes = [10];
+				int len = 0;
+				if (cmd == 0) {
+					System.out.println("Selecione quais atributos vocÃª deseja visualizar, respondendo com 's' ou 'n'");
+					System.out.println("nome");
+					cmd = in.nextLine();
+					if (cmd == 's') {
+						attributes[len] = "nome";
+						len += 1;
+					}
+					System.out.println("email");
+					cmd = in.nextLine();
+					if (cmd == 's') {
+						attributes[len] = "email";
+						len += 1;
+					}
+					System.out.println("idade");
+					cmd = in.nextLine();
+					if (cmd == 's') {
+						attributes[len] = "idade";
+						len += 1;
+					}
+					String[len] values;
+					for (int i = 0; i < len; i++) {
+						values[i] = attributes[i];
+					}
+					System.out.println("VocÃª deseja selecionar algum usuÃ¡rio com uma condiÃ§Ã£o especÃ­fica? (s ou n)");
+					cmd = in.nextLine();
+					if (cmd == "s") {
+						System.out.println("AtravÃ©s de qual atributo?");
+						System.out.println("0 - idade");
+						System.out.println("1 - nome");
+						System.out.println("2 - email");
+						cmd = in.nextLine();
+						switch (cmd) {
+							case '0':
+								System.out.println("Qual idade?");
+								cmd = in.nextLine();
+								jdbc.onSELECT(values, "USUARIO", ["idade"], [cmd]);
+								break;
+							case '1':
+								System.out.println("Qual nome?");
+								cmd = in.nextLine();
+								jdbc.onSELECT(values, "USUARIO", ["nome"], [cmd]);
+								break;
+							case '2':
+								System.out.println("Qual email?");
+								cmd = in.nextLine();
+								jdbc.onSELECT(values, "USUARIO", ["email"], [cmd]);
+								break;
+						}
+					}
+				} else if (cmd == 1) {
+
+				} else if (cmd == 2) {
+
+				} else if (cmd == 3) {
+
+				}
 		}
 		jdbc.closeConnection();
 	}
