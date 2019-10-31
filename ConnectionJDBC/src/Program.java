@@ -37,6 +37,21 @@ public class Program {
 
 				break;
 			case 2:
+				String[] attributes = new String[3];
+				String[] values = new String[3];
+				attributes[0] = "nome";
+				attributes[1] = "ano_lancamento";
+				attributes[2] = "capa";
+				System.out.println("Vamos inserir um novo álbum juntos!");
+				System.out.println("Digite o nome do álbum");
+				values[0] = in.nextLine();
+				System.out.println("Digite o ano de lançamento");
+				values[1] = in.nextLine();
+				System.out.println("Adicione a capa do álbum à pasta FilesToInsert");
+				System.out.println("Digite o nome da imagem que você inseriu");
+				values[2] = in.nextLine();
+				System.out.println("Inserção sendo realizada...");
+				jdbc.onINSERT("Album", attributes, values);
 				break;
 			case 3:
 				break;
