@@ -21,32 +21,19 @@ public class Program {
 			case 1:
 				System.out.println("Vamos realizar a consulta juntos!");
 				boolean notOk = true;
-				do {
-					System.out.println("Digite quantos atributos deseja retornar (1 caso '*'):");
-					int interations = Integer.parseInt(in.nextLine());
-					String [] attributes = new String [interations];
-					System.out.println("Digite os atributos, um por vez (após enter):");
-					for (int i=0; i<interations; i++) {
-						attributes[i] = in.nextLine();
+				System.out.println("Quantos albuns deseja consultar? (caso todos digite -1)");
+				int quantidade = in.nextInt();
+				in.nextLine();
+				if (quantidade == -1) {
+					System.out.println("Consulta sendo processada...");
+				} else {
+					System.out.println("Digite o nome de cada Ã¡lbum que deseja consultar seguido por um enter");
+					String[] nomes = new String[quantidade];
+					for(int i = 0; i < quantidade; i++) {
+						nomes[i] = in.nextLine();
 					}
-					System.out.println("A consulta até agora está: ");
-					System.out.print("SELECT ");
-					if(interations == 1) {
-						System.out.println(attributes[0]);
-					}else {
-						for(int i=0; i<interations-1; i++) {
-							System.out.print(attributes[i] + ", ");
-						}
-						System.out.println(attributes[interations-1]);
-					}
-					System.out.println("Está correto?(y/n): ");
-					String resp = in.nextLine();
-					if(resp.contains("n")) {
-						System.out.println("Vamos novamente");
-					}else {
-						notOk = false;
-					}
-				}while(notOk);
+					System.out.println("Consulta sendo processada...");
+				}
 
 				break;
 			case 2:
