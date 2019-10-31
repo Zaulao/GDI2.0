@@ -15,39 +15,27 @@ public class Negocio {
 		server.closeConnection();
 	}
 
-	public String[] onSELECT(String[] attributes, String table, String[] selectBy, String[] values) {
-		String query = "SELECT ";
-		for (int i = 0; i < attributes.length - 1; i++) {
-			query += attributes[i] + ", ";
+	public void onSELECT(String table, String[] names) {
+		String query = "SELECT * FROM " + table;
+		if (names.length > 0) {
+			query += " WHERE ";
+			for (int i = 0; i < names.length - 1; i++) {
+				query += "nome = '" + names[i] + "' OR ";
+			}
+			query += "nome = '" + names[names.length - 1] + "'";
 		}
-		query += attributes[attributes.length - 1] + " FROM " + table + " table";
-		query += "WHERE "; 
-		for (int i = 0; i < selectBy.length - 1; i++) {
-			query += "table." + selectBy[i] + " = " + values[i] + ", ";
-		}
-		query += "table." + selectBy[selectBy.length - 1] + " = " + values[selectBy.length - 1]; 
-		return server.select(query);
+		System.out.println(query);
+		server.select(query);
 	}
 	
-	public void onINSERT(String table, String[] attributes, String[] values) {
-		String query = "INSERT INTO " + table + " (";
-		for (int i = 0; i < attributes.length - 1; i++) {
-			query += attributes[i] + ", ";
-		}
-		query += attributes[attributes.length - 1] + ") VALUES (";
-		for (int i = 0; i < attributes.length - 1; i++) {
-			query += values[i] + ", ";
-		}
-		query += values[attributes.length - 1] + ")";
-		server.insert(query);
+	public void onINSERT(String[] values) {
+		String path = "../FilesToInsert" + values[2];
+//		server.addAlbumMidia(values[0], values[1], path);
 	}
 	
-	public void onDELETE(String table, String[] attributes, String[] values) {
-		String query = "DELETE FROM " + table + " WHERE ";
-		query += attributes[0] + " = " + values[0];
-		for(int i = 1; i < attributes.length; i++) {
-			query += " AND " + attributes[i] + " = " + values[i];
-		}
-		server.delete(query);
+	public void onDELETE(String table, String attribute, String value) {
+		String query = "DELETE FROM " + table + " WHERE " + attribute + " = '" + value + "'";
+		System.out.println(query);
+//		server.delete(query);
 	}
 }

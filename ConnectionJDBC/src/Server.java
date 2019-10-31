@@ -57,7 +57,6 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void insert(String query) {

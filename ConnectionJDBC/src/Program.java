@@ -24,15 +24,15 @@ public class Program {
 				System.out.println("Quantos albuns deseja consultar? (caso todos digite -1)");
 				int quantidade = in.nextInt();
 				in.nextLine();
+				String[] nomes = new String[quantidade];
 				if (quantidade == -1) {
-					System.out.println("Consulta sendo processada...");
+					jdbc.onSELECT("Album", nomes);
 				} else {
 					System.out.println("Digite o nome de cada álbum que deseja consultar seguido por um enter");
-					String[] nomes = new String[quantidade];
 					for(int i = 0; i < quantidade; i++) {
 						nomes[i] = in.nextLine();
 					}
-					System.out.println("Consulta sendo processada...");
+					jdbc.onSELECT("Album", nomes);
 				}
 
 				break;
@@ -51,7 +51,7 @@ public class Program {
 				System.out.println("Digite o nome da imagem que você inseriu");
 				values[2] = in.nextLine();
 				System.out.println("Inserção sendo realizada...");
-				jdbc.onINSERT("Album", attributes, values);
+				jdbc.onINSERT(values);
 				break;
 			case 3:
 				System.out.println("Qual o nome do álbum que você deseja excluir?");
