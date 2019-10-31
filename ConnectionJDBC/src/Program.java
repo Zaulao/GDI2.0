@@ -54,6 +54,13 @@ public class Program {
 				jdbc.onINSERT("Album", attributes, values);
 				break;
 			case 3:
+				System.out.println("Qual o nome do álbum que você deseja excluir?");
+				String nome = in.nextLine();
+				if (nome.contains("JESUS IS KING")) {
+					System.out.println("Nosso programa não comete blasfêmia.");
+				} else {
+					jdbc.onDELETE("Album", "nome", nome);
+				}
 				break;
 			}
 		}
