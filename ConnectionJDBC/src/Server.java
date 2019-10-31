@@ -1,8 +1,14 @@
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Server {
 	
@@ -42,16 +48,16 @@ public class Server {
 		}
 	}
 	
-	public String[] select(String query) {
+	public void select(String query) {
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			return imprimirResultado(rs);
+			formateResultado(rs);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		
 	}
 	
 	public void insert(String query) {
@@ -72,36 +78,53 @@ public class Server {
 		}
 	}
 	
-    public String[] imprimirResultado(ResultSet resultado) throws SQLException{
+    public void formateResultado(ResultSet resultado) throws SQLException{
 		ResultSetMetaData metadata = resultado.getMetaData();
 	    int columnCount = metadata.getColumnCount();    
-	    String result[] = new String[1000];
 	    String row = "";
 	    int count = 0;
-	    for (int i = 1; i <= columnCount; i++) {
-	        row = (metadata.getColumnName(i) + ", ");      
+	    for (int i = 1; i <= columnCount-1; i++) {
+	    	System.out.print(metadata.getColumnName(i) + "|");
+	        row += (metadata.getColumnName(i));
 	    }
-	    result[count] = row;
+	    System.out.println();
+	    
 	    count++;
 	    while (resultado.next()) {
-	        row = "";
-	        for (int i = 1; i <= columnCount; i++) {
-	            row += resultado.getString(i) + ", ";          
+	        for (int i = 1; i <= columnCount-1; i++) {
+	            System.out.print(resultado.getString(i) + "|");          
 	        }
-	        result[count] = row;
-
+	        Blob aaa = resultado.getBlob(3);
+			int tamanho = (int) aaa.length();
+			byte[] data = aaa.getBytes(1, tamanho);
+			JFrame frame = new JFrame (resultado.getString(1));
+			
+		    frame.setLocationRelativeTo(null);
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    Toolkit tk = Toolkit.getDefaultToolkit();
+		    Image icon = tk.createImage(data);
+		    ImageIcon im = new ImageIcon(icon);
+		    JLabel fotop = new JLabel();
+		    fotop.setSize(icon.getWidth(null), icon.getHeight(null));
+		    frame.setSize(fotop.getSize());
+		    fotop.setIcon(im);
+		    frame.add(fotop);
+		    frame.setVisible(true);
+			
+		    System.out.println();
 	    }
-	    return result;
+	    
     }
 	
-	public void addAlbumMidia(String name, String path) {
-		String query = "INSERT INTO Album (nome, capa) VALUES (?,?)";
+	public void addAlbumMidia(String name, int ano, String path) {
+		String query = "INSERT INTO Album (nome, ano_lancamento, capa) VALUES (?,?,?)";
 				PreparedStatement ps;
 				try {
 					ps = connection.prepareStatement(query);
 					ps.setString(1, name);
+					ps.setString(2, ""+ano);
 					FileInputStream file = new FileInputStream(path);
-					ps.setBinaryStream(2, file);
+					ps.setBinaryStream(3, file);
 					ps.execute();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -111,6 +134,8 @@ public class Server {
 					e.printStackTrace();
 				}
 	}
+	
+	
 
 		//pst.executeUpdate("DROP TABLE teste");
 		//pst.executeQuery("CREATE TABLE teste (teste VARCHAR2(30), image BLOB)");
