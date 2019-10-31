@@ -21,37 +21,46 @@ public class Program {
 			case 1:
 				System.out.println("Vamos realizar a consulta juntos!");
 				boolean notOk = true;
-				do {
-					System.out.println("Digite quantos atributos deseja retornar (1 caso '*'):");
-					int interations = Integer.parseInt(in.nextLine());
-					String [] attributes = new String [interations];
-					System.out.println("Digite os atributos, um por vez (ap�s enter):");
-					for (int i=0; i<interations; i++) {
-						attributes[i] = in.nextLine();
+				System.out.println("Quantos albuns deseja consultar? (caso todos digite -1)");
+				int quantidade = in.nextInt();
+				in.nextLine();
+				if (quantidade == -1) {
+					System.out.println("Consulta sendo processada...");
+				} else {
+					System.out.println("Digite o nome de cada álbum que deseja consultar seguido por um enter");
+					String[] nomes = new String[quantidade];
+					for(int i = 0; i < quantidade; i++) {
+						nomes[i] = in.nextLine();
 					}
-					System.out.println("A consulta at� agora est�: ");
-					System.out.print("SELECT ");
-					if(interations == 1) {
-						System.out.println(attributes[0]);
-					}else {
-						for(int i=0; i<interations-1; i++) {
-							System.out.print(attributes[i] + ", ");
-						}
-						System.out.println(attributes[interations-1]);
-					}
-					System.out.println("Est� correto?(y/n): ");
-					String resp = in.nextLine();
-					if(resp.contains("n")) {
-						System.out.println("Vamos novamente");
-					}else {
-						notOk = false;
-					}
-				}while(notOk);
+					System.out.println("Consulta sendo processada...");
+				}
 
 				break;
 			case 2:
+				String[] attributes = new String[3];
+				String[] values = new String[3];
+				attributes[0] = "nome";
+				attributes[1] = "ano_lancamento";
+				attributes[2] = "capa";
+				System.out.println("Vamos inserir um novo álbum juntos!");
+				System.out.println("Digite o nome do álbum");
+				values[0] = in.nextLine();
+				System.out.println("Digite o ano de lançamento");
+				values[1] = in.nextLine();
+				System.out.println("Adicione a capa do álbum à pasta FilesToInsert");
+				System.out.println("Digite o nome da imagem que você inseriu");
+				values[2] = in.nextLine();
+				System.out.println("Inserção sendo realizada...");
+				jdbc.onINSERT("Album", attributes, values);
 				break;
 			case 3:
+				System.out.println("Qual o nome do álbum que você deseja excluir?");
+				String nome = in.nextLine();
+				if (nome.contains("JESUS IS KING")) {
+					System.out.println("Nosso programa não comete blasfêmia.");
+				} else {
+					jdbc.onDELETE("Album", "nome", nome);
+				}
 				break;
 			}
 		}
