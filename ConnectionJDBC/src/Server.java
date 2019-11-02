@@ -21,7 +21,7 @@ public class Server {
 	
 	public Server() {
 		openConnection();
-		closeConnection();
+		// closeConnection();
 	}
 	
 	public void openConnection() {
@@ -86,7 +86,6 @@ public class Server {
 	    	System.out.print(metadata.getColumnName(i) + "|");
 	        row += (metadata.getColumnName(i));
 	    }
-	    System.out.println();
 	    
 	    count++;
 	    while (resultado.next()) {

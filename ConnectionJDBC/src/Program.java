@@ -24,7 +24,7 @@ public class Program {
 				System.out.println("Quantos albuns deseja consultar? (caso todos digite -1)");
 				int quantidade = in.nextInt();
 				in.nextLine();
-				String[] nomes = new String[quantidade];
+				String[] nomes = new String[Math.max(0, quantidade)];
 				if (quantidade == -1) {
 					jdbc.onSELECT("Album", nomes);
 				} else {

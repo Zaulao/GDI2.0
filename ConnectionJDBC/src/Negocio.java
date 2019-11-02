@@ -1,4 +1,4 @@
-
+import java.io.File;
 
 public class Negocio {
 	private Server server;
@@ -29,13 +29,12 @@ public class Negocio {
 	}
 	
 	public void onINSERT(String[] values) {
-		String path = "../FilesToInsert" + values[2];
-//		server.addAlbumMidia(values[0], values[1], path);
+		String path = new File("").getAbsolutePath() + "\\ConnectionJDBC\\src\\FilesToInsert\\" + values[2];
+		server.addAlbumMidia(values[0], Integer.parseInt(values[1]), path);
 	}
 	
 	public void onDELETE(String table, String attribute, String value) {
 		String query = "DELETE FROM " + table + " WHERE " + attribute + " = '" + value + "'";
-		System.out.println(query);
-//		server.delete(query);
+		server.delete(query);
 	}
 }
